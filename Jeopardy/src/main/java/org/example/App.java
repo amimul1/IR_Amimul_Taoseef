@@ -124,7 +124,7 @@ public class App {
 
     private static Map<String,String> getQueryQuestions(String path) throws IOException {
         Map<String,String> map = new LinkedHashMap<>();
-        try (Scanner sc = new Scanner(new File(path))) {
+        try (Scanner sc = new Scanner(new File(path), "UTF-8")) {
             while (sc.hasNextLine()) {
                 String clue = sc.nextLine().trim();
                 if (clue.isEmpty()) continue;
@@ -145,7 +145,7 @@ public class App {
 
         int docs=0;
         for (String f : files) {
-            try (Scanner sc = new Scanner(new File(dir + f))) {
+            try (Scanner sc = new Scanner(new File(dir + f), "UTF-8")) {
                 String title="", text="";
                 while (sc.hasNextLine()) {
                     String line = sc.nextLine();
