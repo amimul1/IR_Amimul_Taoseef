@@ -1,1 +1,5 @@
 .DS_Store
+/Jeopardy/target/classes/org/example
+/Jeopardy/target/classes
+/Jeopardy/target
+/Jeopardy/target/maven-status/maven-compiler-plugin/compile/default-compile
