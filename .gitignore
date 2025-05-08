@@ -4,3 +4,5 @@
 /Jeopardy/target
 /Jeopardy/target/maven-status/maven-compiler-plugin/compile/default-compile
 /Jeopardy/src/main/resources/wiki-subset-20140602
+/venv
+Jeopardy/target/classes/org/example/App.class

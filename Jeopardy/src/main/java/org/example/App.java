@@ -38,7 +38,7 @@ public class App {
 
     static final String WIKI_DIR = "src/main/resources/wiki-subset-20140602/";
     static final String QUESTIONS_FILE = "src/main/resources/questions.txt";
-    static final String OUTPUT_FILE = "src/main/resources/queriesProcessed.txt";
+    static final String OUTPUT_FILE = "src/main/resources/queriesProcessedBaseline.txt";
 
     private final Analyzer analyzer;
     private final Directory index;
@@ -71,7 +71,7 @@ public class App {
         Query luceneQ = parser.parse(query);
         IndexReader rdr = DirectoryReader.open(index);
         IndexSearcher searcher = new IndexSearcher(rdr);
-        TopDocs hits = searcher.search(luceneQ, 10);
+        TopDocs hits = searcher.search(luceneQ,10);
 
         List<String> answers = new ArrayList<>();
         for (ScoreDoc sd : hits.scoreDocs) {
@@ -92,12 +92,11 @@ public class App {
             List<String> preds = Collections.emptyList();
             try { preds = queryIt(question); }
             catch (Exception ex) { }
-
-            out.append("|\n[content]\n")
-               .append(question).append("\n[content]\n")
-               .append(gold).append("\n[content]\n")
-               .append(preds).append("\n|\n");
-
+            out.append("|\n")
+            .append("[content]\n")
+            .append(question).append("[content]\n")
+            .append(gold).append("[content]\n")
+            .append(preds).append("|\n");
             if (!preds.isEmpty() && preds.contains(gold)) {
                 found++;
                 int rank = preds.indexOf(gold) + 1;
@@ -105,10 +104,8 @@ public class App {
                 if (preds.get(0).equals(gold)) correctAt1++;
             }
         }
-
         //computing the results 
-        // our baseline gets MRR = 0.36 and P@1 = 0.30 without using LLM to rerank
-
+        // our baseline gets MRR = 0.36 and P@1 = 0.30 without using LLM to rerank :)
         double mrr = mrrSum / total;
         double pAt1 = (double)correctAt1 / total;
         System.out.printf("\nMRR = %.4f%nP@1 = %.4f%nFound = %d / %d%n",
@@ -189,7 +186,8 @@ public class App {
             Map<String,String> stopMap = new HashMap<>();
             stopMap.put("words", "stopwords.txt");
             stopMap.put("format", "wordset");
-
+            // you can comment out some lines to see the scores of other configurations 
+            // as mentioned in our results table
             return CustomAnalyzer.builder()
                    .withTokenizer(StandardTokenizerFactory.class)
                    .addTokenFilter(LowerCaseFilterFactory.class)
