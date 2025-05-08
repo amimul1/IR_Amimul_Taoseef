@@ -15,9 +15,9 @@ Install Maven
 
 
 ```bash
-   git clone 
+   git clone https://github.com/amimul1/IR_Amimul_Taoseef.git
    cd Jeopardy
-   mvn clean package
+   mvn clean compile exec:java
 
 
 
